@@ -56,7 +56,7 @@ def initdb_command():
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select title, desc from entries order by id desc')
+    cur = db.execute('select title, text from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
 
@@ -76,7 +76,7 @@ def add_entry():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
-    if request.methods == POST:
+    if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
             error = 'Invalid Username'
         elif request.form['password'] != app.config['PASSWORD']:
